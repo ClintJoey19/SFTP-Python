@@ -53,8 +53,8 @@ if __name__ == "__main__":
     drive_id = drive["value"][0]["id"]
 
     # Upload sample
-    # upload_file = sharepointClient.upload(drive_id, "./key.txt", "key.txt")
-    # print(upload_file)
+    upload_file = sharepointClient.upload(drive_id, "./key.txt", "key.txt", "ANZ Bank statements")
+    print(upload_file)
 
     # List files sample
     # files = sharepointClient.list_files(drive_id)

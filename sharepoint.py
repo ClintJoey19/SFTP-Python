@@ -85,12 +85,12 @@ class SharePointClient:
 
         return files["value"]
 
-    def upload(self, drive_id, file_path, file_name):
+    def upload(self, drive_id, file_path, file_name, destination_path = None):
         """Upload a file to SharePoint"""
         with open(file_path, "rb") as f:
             content = f.read()
 
-            url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root:/{file_name}:/content"
+            url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root:/{f"{destination_path}/" if not None else ""}{file_name}:/content"
             headers = {"Authorization": f"Bearer {self.access_token}"}
 
             response = requests.put(url=url, headers=headers, data=content)
