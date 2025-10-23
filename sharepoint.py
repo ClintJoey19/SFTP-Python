@@ -26,7 +26,6 @@ class SharePointClient:
 
         result = app.acquire_token_for_client(scopes=self.scopes)
 
-        print(result)
         self.token_type = result["token_type"]
         self.access_token = result["access_token"]
         self.expires_in = result["expires_in"]
@@ -62,9 +61,29 @@ class SharePointClient:
 
         return drive
 
-    def list_files(self, site_name, site_path):
+    def get_file_by_id(self, drive_id, file_id):
+        """Get a file from a SharePoint site"""
+        url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/items/{file_id}"
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+
+        response = requests.get(url=url, headers=headers)
+
+        file = response.json()
+
+        return file
+
+    def list_files(self, drive_id, folder_path = None):
         """List files from a SharePoint site"""
-        print("Files")
+        default_path = "root/children"
+        target_path = default_path if folder_path is None else f"root:/{folder_path}:/children"
+        url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/{target_path}"
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+
+        response = requests.get(url=url, headers=headers)
+
+        files = response.json()
+
+        return files["value"]
 
     def upload(self, drive_id, file_path, file_name):
         """Upload a file to SharePoint"""

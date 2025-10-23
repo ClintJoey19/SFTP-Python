@@ -48,11 +48,16 @@ if __name__ == "__main__":
 
     site = sharepointClient.get_site(site_name, site_path)
     site_id = site["id"]
-    print(site_id)
 
     drive = sharepointClient.get_drive(site_id)
     drive_id = drive["value"][0]["id"]
-    print(drive_id)
 
-    upload_file = sharepointClient.upload(drive_id, "./key.txt", "key.txt")
-    print(upload_file)
+    # Upload sample
+    # upload_file = sharepointClient.upload(drive_id, "./key.txt", "key.txt")
+    # print(upload_file)
+
+    # List files sample
+    # files = sharepointClient.list_files(drive_id)
+    #
+    # for file in files:
+    #     print(file["name"])
